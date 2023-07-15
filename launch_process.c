@@ -24,14 +24,11 @@ char **tokenize_string(char *lineptr)
                 index++;
                 if (index >= buf)
                 {
-                        buf += TOKEN_BUFFSIZE;
-                        toks = realloc(toks, buf * sizeof(char*));
                         if (!toks)
                         {
                                 write(STDERR_FILENO, error, _strnglen(error));
                                 exit(EXIT_FAILURE);
 			}
-			free(toks);
 		}	
                 token = strtok(NULL, delim);
         }
@@ -78,7 +75,6 @@ int init_process(char **toks)
 				perror("hsh");
 				exit(EXIT_FAILURE);
 			}
-			free_tokens(toks);
 			free(command_path);
 		}
 		else

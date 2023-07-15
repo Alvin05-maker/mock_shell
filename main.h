@@ -18,7 +18,6 @@
 
 /*builtin () prototypes*/
 int my_cd(char **argv);
-int my_help(char **argv);
 int my_exit(char **argv);
 
 /* string functions*/

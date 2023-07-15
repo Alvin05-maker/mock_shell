@@ -50,10 +50,10 @@ int my_exit(char **argv)
         return 0;
 }
 
-/*
- * execute_cmd - executes the command provided the first argument passed is not NULL
+/**
+ * execute_cmd - seeks to execute builtin functions
  * @argv: array of command-line arguments passed to the program
- * Return: return to initiation of prrocess
+ * Return: return to initiation of process if the command is not builtin
  */
 int execute_cmd(char **argv)
 {

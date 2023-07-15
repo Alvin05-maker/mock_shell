@@ -17,10 +17,12 @@ int main(void)
  */
 void myshell_loop(void)
 {
-	char *lineptr;
+	char *lineptr = NULL;
 	char **argv;
 	int stat;
 	char *prompt = "$";
+	size_t buf = 0; /*buffer size allocated by getline()*/
+        ssize_t charsRead;
 
 	do {
 		if (isatty(STDIN_FILENO))
@@ -28,7 +30,20 @@ void myshell_loop(void)
 			write(STDIN_FILENO, prompt, _strnglen(prompt));
 			fflush(stdout);
 		}
-		lineptr = get_line();
+		charsRead = getline(&lineptr, &buf, stdin);
+		if (charsRead == -1)
+		{
+			if (feof(stdin))
+			{
+				write(STDOUT_FILENO, "\r", 1);
+				exit(0);/*EOF is received*/
+			}
+			else
+			{
+				perror("can't read line");
+				exit(0);
+			}
+		}
 		argv = tokenize_string(lineptr);
 		stat = execute_cmd(argv);
 
